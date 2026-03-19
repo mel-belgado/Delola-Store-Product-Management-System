@@ -23,7 +23,7 @@ CREATE TABLE ORDER_ITEM (
 CREATE TYPE order_status AS ENUM ('PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED');
 CREATE TABLE ORDER (
     order_id INT PRIMARY KEY,
-    customer_id INT
+    customer_id INT,
     order_date DATE NOT NULL,
     status order_status DEFAULT 'PENDING',
     total_price DECIMAL(10, 2) NOT NULL,
@@ -31,10 +31,11 @@ CREATE TABLE ORDER (
     FOREIGN KEY (customer_id) REFERENCES CUSTOMER(customer_id)
 );
 
+-- Subtype tables for different order types
 CREATE TABLE IN_STORE_ORDER (
     order_id INT PRIMARY KEY,
     release_time TIME NULL,
-    claimbed_by VARCHAR(255) NULL,
+    claimed_by VARCHAR(255) NULL,
     FOREIGN KEY (order_id) REFERENCES ORDER(order_id)
 );
 
@@ -43,3 +44,28 @@ CREATE TABLE DELIVERY_ORDER (
     delivery_address VARCHAR(255) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES ORDER(order_id)
 );
+
+-- Delivery table to track delivery details for delivery orders
+CREATE TYPE delivery_status AS ENUM ('PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED');
+CREATE TABLE DELIVERY (
+    delivery_id INT PRIMARY KEY,
+    order_id INT,
+    delivery_date DATE NOT NULL,
+    delivery_street VARCHAR(255) NOT NULL,
+    delivery_baranagay VARCHAR(255) NOT NULL,
+    delivery_city VARCHAR(255) NOT NULL,
+    delivery_province VARCHAR(255) NOT NULL,
+    status delivery_status DEFAULT 'PENDING',
+    FOREIGN KEY (order_id) REFERENCES ORDER(order_id)
+);
+
+CREATE TABLE CUSTOMER (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(255) NOT NULL,
+    contact_number VARCHAR(20) NOT NULL,
+    customer_street VARCHAR(255) NOT NULL,
+    customer_baranagay VARCHAR(255) NOT NULL,
+    customer_city VARCHAR(255) NOT NULL,
+    customer_province VARCHAR(255) NOT NULL
+);
+
