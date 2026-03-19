@@ -8,7 +8,7 @@ CREATE TABLE CUSTOMER (
     customer_name VARCHAR(255) NOT NULL,
     contact_number VARCHAR(20) NOT NULL,
     customer_street VARCHAR(255) NOT NULL,
-    customer_baranagay VARCHAR(255) NOT NULL,
+    customer_barangay VARCHAR(255) NOT NULL,
     customer_city VARCHAR(255) NOT NULL,
     customer_province VARCHAR(255) NOT NULL
 );
@@ -18,7 +18,7 @@ CREATE TABLE SUPPLIER (
     supplier_name VARCHAR(255) NOT NULL,
     contact_number VARCHAR(20) NOT NULL,
     supplier_street VARCHAR(255) NOT NULL,
-    supplier_baranagay VARCHAR(255) NOT NULL,
+    supplier_barangay VARCHAR(255) NOT NULL,
     supplier_city VARCHAR(255) NOT NULL,
     supplier_province VARCHAR(255) NOT NULL
 );
@@ -61,7 +61,7 @@ CREATE TABLE IN_STORE_ORDER (
 
 CREATE TABLE DELIVERY_ORDER (
     order_id INT PRIMARY KEY,
-    delivery_address VARCHAR(255) NOT NULL,
+    delivery_note VARCHAR(255) NULL,
     FOREIGN KEY (order_id) REFERENCES ORDERS(order_id)
 );
 
@@ -72,7 +72,7 @@ CREATE TABLE DELIVERY (
     order_id INT,
     delivery_date DATE NOT NULL,
     delivery_street VARCHAR(255) NOT NULL,
-    delivery_baranagay VARCHAR(255) NOT NULL,
+    delivery_barangay VARCHAR(255) NOT NULL,
     delivery_city VARCHAR(255) NOT NULL,
     delivery_province VARCHAR(255) NOT NULL,
     status delivery_status DEFAULT 'PENDING',
