@@ -1,6 +1,3 @@
-CREATE TYPE status_enum AS ENUM ('PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED');
-CREATE TYPE order_type_enum AS ENUM ('IN_STORE', 'DELIVERY');
-
 CREATE TABLE PRODUCT_CATEGORY (
     category_id INT PRIMARY KEY,
     category_name VARCHAR(255) NOT NULL
@@ -39,9 +36,9 @@ CREATE TABLE ORDERS (
     order_id INT PRIMARY KEY,
     customer_id INT,
     order_date DATE NOT NULL,
-    status status_enum DEFAULT 'PENDING',
+    status ENUM('PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED') DEFAULT 'PENDING',
     total_price DECIMAL(10, 2) NOT NULL,
-    order_type order_type_enum NOT NULL,
+    order_type ENUM('IN_STORE', 'DELIVERY') NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES CUSTOMER(customer_id)
 );
 
@@ -69,7 +66,6 @@ CREATE TABLE DELIVERY_ORDER (
     FOREIGN KEY (order_id) REFERENCES ORDERS(order_id)
 );
 
--- Delivery table to track delivery details for delivery orders
 CREATE TABLE DELIVERY (
     delivery_id INT PRIMARY KEY,
     order_id INT,
@@ -79,7 +75,7 @@ CREATE TABLE DELIVERY (
     delivery_city VARCHAR(255) NOT NULL,
     delivery_province VARCHAR(255) NOT NULL,
     delivered_by VARCHAR(255),
-    status status_enum DEFAULT 'PENDING',
+    status ENUM('PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED') DEFAULT 'PENDING',
     FOREIGN KEY (order_id) REFERENCES ORDERS(order_id)
 );
 
@@ -87,7 +83,7 @@ CREATE TABLE SHIPMENT (
     shipment_id INT PRIMARY KEY,
     supplier_id INT,
     shipment_date DATE NOT NULL,
-    status status_enum DEFAULT 'PENDING',
+    status ENUM('PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED') DEFAULT 'PENDING',
     reference_number VARCHAR(255) NOT NULL,
     FOREIGN KEY (supplier_id) REFERENCES SUPPLIER(supplier_id)
 );
