@@ -1,4 +1,3 @@
--- Single reusable ENUM
 CREATE TYPE status_enum AS ENUM ('PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED');
 
 CREATE TABLE PRODUCT (
