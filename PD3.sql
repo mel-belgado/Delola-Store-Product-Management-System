@@ -1,10 +1,10 @@
 CREATE TABLE PRODUCT_CATEGORY (
-    category_id INT PRIMARY KEY,
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE CUSTOMER (
-    customer_id INT PRIMARY KEY,
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_name VARCHAR(255) NOT NULL,
     contact_number VARCHAR(20) NOT NULL,
     customer_street VARCHAR(255) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE CUSTOMER (
 );
 
 CREATE TABLE SUPPLIER (
-    supplier_id INT PRIMARY KEY,
+    supplier_id INT AUTO_INCREMENT PRIMARY KEY,
     supplier_name VARCHAR(255) NOT NULL,
     contact_number VARCHAR(20) NOT NULL,
     supplier_street VARCHAR(255) NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE SUPPLIER (
 );
 
 CREATE TABLE PRODUCT (
-    product_id INT PRIMARY KEY,
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
     product_name VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL CHECK (price > 0),
     stock_quantity INT NOT NULL DEFAULT 0,
@@ -33,7 +33,7 @@ CREATE TABLE PRODUCT (
 );
 
 CREATE TABLE ORDERS (
-    order_id INT PRIMARY KEY,
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT,
     order_date DATE NOT NULL,
     status ENUM('PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED') DEFAULT 'PENDING',
@@ -43,7 +43,7 @@ CREATE TABLE ORDERS (
 );
 
 CREATE TABLE ORDER_ITEM (
-    order_item_id INT PRIMARY KEY,
+    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
     product_id INT,
     quantity INT NOT NULL CHECK (quantity > 0),
@@ -54,20 +54,20 @@ CREATE TABLE ORDER_ITEM (
 
 -- Subtype tables for different order types
 CREATE TABLE IN_STORE_ORDER (
-    order_id INT PRIMARY KEY,
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
     release_time TIME NULL,
     claimed_by VARCHAR(255) NULL,
     FOREIGN KEY (order_id) REFERENCES ORDERS(order_id)
 );
 
 CREATE TABLE DELIVERY_ORDER (
-    order_id INT PRIMARY KEY,
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
     delivery_note VARCHAR(255) NULL,
     FOREIGN KEY (order_id) REFERENCES ORDERS(order_id)
 );
 
 CREATE TABLE DELIVERY (
-    delivery_id INT PRIMARY KEY,
+    delivery_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
     delivery_date DATE NOT NULL,
     delivery_street VARCHAR(255) NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE DELIVERY (
 );
 
 CREATE TABLE SHIPMENT (
-    shipment_id INT PRIMARY KEY,
+    shipment_id INT AUTO_INCREMENT PRIMARY KEY,
     supplier_id INT,
     shipment_date DATE NOT NULL,
     status ENUM('PENDING', 'SHIPPED', 'DELIVERED', 'CANCELLED') DEFAULT 'PENDING',
@@ -89,7 +89,7 @@ CREATE TABLE SHIPMENT (
 );
 
 CREATE TABLE SHIPMENT_ITEM (
-    shipment_item_id INT PRIMARY KEY,
+    shipment_item_id INT AUTO_INCREMENT PRIMARY KEY,
     shipment_id INT,
     product_id INT,
     quantity INT NOT NULL CHECK (quantity > 0),
